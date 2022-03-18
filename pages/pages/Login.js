@@ -65,9 +65,10 @@ function Login({ email, password }) {
         className="bg-hero-pattern bg-no-repeat bg-cover flex-[0.6] 
         rounded-r-2xl shadow-md "
       >
-        <h1 className="text-white">
-          Start planning your <br/><span className="text-white font-extrabold text-[50px] pt-4">Journey</span>
+        <h1 className="text-white text-sm justify-center">
+          Start planning your <br />
         </h1>
+        <p className="text-white font-extrabold text-[50px] mt-0">Journey</p>
       </div>
     </div>
   );
