@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
@@ -6,27 +6,34 @@ import { useState } from "react";
 import axios from "axios";
 
 function Login(props) {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  async function loginHandler(e) {
+
+  // useEffect(() => {
+  //   return () => {
+  //     // setUsername(null);
+  //     // setPassword(null);
+  //   };
+  // }, []);
+
+  const loginHandler = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/login", {
         username,
         password,
       });
+      console.log(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userName", response.data.username);
+      localStorage.setItem("avatar", response.data.avatar);
       props.setIsLoggedIn(true);
-      console.log(response.data);
     } catch (e) {
-      console.log("email or password incorrect");
+      console.log(e + "mail or password incorrect");
     }
-  }
+  };
   return (
-    <form
-      onSubmit={(e) => {
-        loginHandler(e);
-      }}
-    >
+    <form onSubmit={loginHandler}>
       <div className="w-full flex h-screen p-10 px-[10%] justify-center bg-gray-300 shadow-md">
         <div className="bg-white flex-[0.4] rounded-l-2xl pt-3 h-auto">
           <Image className="" src="/1.jpg" width={60} height={40} />
