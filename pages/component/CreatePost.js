@@ -26,15 +26,15 @@ export default function CreatePost() {
           AddNewPost(e);
         }}
       >
-        <div class="form-group">
-          <label for="post-title" class="text-muted mb-1">
+        <div className="form-group">
+          <label for="post-title" className="text-muted mb-1">
             <small>Title</small>
           </label>
           <input
             autofocus
             name="title"
             id="post-title"
-            class="form-control form-control-lg form-control-title"
+            className="form-control form-control-lg form-control-title"
             type="text"
             placeholder=""
             onChange={(e) => {
@@ -44,8 +44,8 @@ export default function CreatePost() {
           />
         </div>
 
-        <div class="form-group">
-          <label for="post-body" class="text-muted mb-1 d-block">
+        <div className="form-group">
+          <label for="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
           </label>
           <textarea
@@ -54,12 +54,12 @@ export default function CreatePost() {
             onChange={(e) => {
               setBody(e.target.value);
             }}
-            class="body-content tall-textarea form-control"
+            className="body-content tall-textarea form-control"
             type="text"
           ></textarea>
         </div>
 
-        <button class="btn btn-primary">Save New Post</button>
+        <button className="btn btn-primary">Save New Post</button>
       </form>
     </div>
   );

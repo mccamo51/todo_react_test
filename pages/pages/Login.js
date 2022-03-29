@@ -1,20 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Image from "next/image";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
 import { useState } from "react";
 import axios from "axios";
+import DispatchContext from "../../store/DispatchContext";
+import actions from "../../store/actions";
 
 function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   return () => {
-  //     // setUsername(null);
-  //     // setPassword(null);
-  //   };
-  // }, []);
+  const { dispatch } = useContext(DispatchContext);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -27,9 +24,9 @@ function Login(props) {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userName", response.data.username);
       localStorage.setItem("avatar", response.data.avatar);
-      props.setIsLoggedIn(true);
+      dispatch({ type: actions.login });
     } catch (e) {
-      console.log(e + "mail or password incorrect");
+      console.log(e);
     }
   };
   return (

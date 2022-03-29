@@ -1,13 +1,30 @@
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import actions from "../../store/actions";
+import StateContext from "../../store/StateContext";
+import axios from "axios";
+import { BASEURL } from "../../store/StorageKey";
 
-function HomePage(props) {
+function HomePage() {
+  const dispatch = useContext(StateContext);
+  const [allPost, setAllPost] = useState([]);
   function logoutHandler() {
-    props.setIsLoggedIn(false);
     localStorage.removeItem("userName");
     localStorage.removeItem("token");
     localStorage.removeItem("avatar");
+    dispatch({ type: actions.logout });
   }
+  async function getallPost() {
+    try {
+      const response = await axios.get(BASEURL + "/profile/amo/posts");
+      console.log(response);
+      setAllPost(response.data);
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    getallPost();
+  }, []);
 
   return (
     <div className="flex flex-col py-5">
@@ -19,42 +36,27 @@ function HomePage(props) {
           </button>
         </Link>
       </div>
-      <div className="flex pr-3">
-        <a href="#" className="list-group-item list-group-item-action">
-          <img
-            className="avatar-tiny"
-            src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128"
-          />{" "}
-          <strong>Example Post #1</strong>
-          <span className="text-muted small">by brad on 2/10/2020 </span>
-        </a>
-        <a href="#" className="list-group-item list-group-item-action">
-          <img
-            className="avatar-tiny"
-            src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"
-          />{" "}
-          <strong>Example Post #2</strong>
-          <span className="text-muted small">by barksalot on 2/10/2020 </span>
-        </a>
-        <a href="#" className="list-group-item list-group-item-action">
-          <img
-            className="avatar-tiny"
-            src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128"
-          />{" "}
-          <strong>Example Post #3</strong>
-          <span className="text-muted small">by brad on 2/10/2020 </span>
-        </a>
-        <a href="#" className="list-group-item list-group-item-action">
-          <img
-            className="avatar-tiny"
-            src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"
-          />{" "}
-          <strong>Example Post #4</strong>
-          <span className="text-muted small">by barksalot on 2/10/2020 </span>
-        </a>
+      <div className="flex">
+        {allPost.map((post) => {
+          return (
+            <div className="p-4">
+              <Link href={`/post/${post._id}`}>
+                <div>
+                  <img className="avatar-tiny" src={post.author.avatar} />{" "}
+                  <strong>{post.title}</strong>
+                  <span className="text-muted small">
+                    created by {post.author.username}
+                  </span>
+                </div>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 export default HomePage;
+{
+}
