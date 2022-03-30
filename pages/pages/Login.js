@@ -6,8 +6,9 @@ import { useState } from "react";
 import axios from "axios";
 import DispatchContext from "../../store/DispatchContext";
 import actions from "../../store/actions";
+import { BASEURL } from "../../store/StorageKey";
 
-function Login(props) {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,17 +17,21 @@ function Login(props) {
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post(BASEURL + "/login", {
         username,
         password,
       });
-      console.log(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userName", response.data.username);
-      localStorage.setItem("avatar", response.data.avatar);
-      dispatch({ type: actions.login });
+      if (response.data.token !== undefined) {
+        console.log("wertyui", response.data.token);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.username);
+        localStorage.setItem("avatar", response.data.avatar);
+        dispatch({ type: actions.login });
+      } else {
+        alert("Cannot be empty");
+      }
     } catch (e) {
-      console.log(e);
+      // console.log("cccccc", e);
     }
   };
   return (
