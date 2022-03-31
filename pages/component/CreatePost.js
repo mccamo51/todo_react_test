@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { Input } from 'antd';
+
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const { TextArea } = Input;
+
 
   async function AddNewPost(e) {
     e.preventDefault();
@@ -20,17 +24,17 @@ export default function CreatePost() {
   }
 
   return (
-    <div>
+    <div className="">
       <form
         onSubmit={(e) => {
           AddNewPost(e);
         }}
       >
-        <div className="form-group">
+        <div className="form-group mb-4">
           <label for="post-title" className="text-muted mb-1">
             <small>Title</small>
           </label>
-          <input
+          <Input
             autofocus
             name="title"
             id="post-title"
@@ -48,7 +52,7 @@ export default function CreatePost() {
           <label for="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
           </label>
-          <textarea
+          <TextArea
             name="body"
             id="post-body"
             onChange={(e) => {
@@ -56,10 +60,10 @@ export default function CreatePost() {
             }}
             className="body-content tall-textarea form-control"
             type="text"
-          ></textarea>
+          ></TextArea>
         </div>
 
-        <button className="btn btn-primary">Save New Post</button>
+        <button className="items-center flex mt-3 py-1 px-3 bg-sky-400 rounded-md text-white">Save New Post</button>
       </form>
     </div>
   );

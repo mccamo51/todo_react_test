@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASEURL, TokenString } from "../../store/StorageKey";
 import { useRouter } from "next/router";
+import { Avatar } from "antd";
 function postDetails({ data }) {
   const [title, setTitle] = useState("Now");
   const [body, setBody] = useState(
@@ -35,29 +36,24 @@ function postDetails({ data }) {
   }
 
   return (
-    <div>
-      <div className="flex justify-between p-7">
-        <button
-          onClick={(e) => {
-            // editSinglePost(data._id);
-          }}
-          className="bg-blue-600 p-1 text-white text-sm"
-        >
-          Edit
-        </button>
-        <button
-          onClick={(e) => {
-            deleteSinglePost(data._id);
-          }}
-          className="bg-red-500 p-1 text-white text-sm"
-        >
-          Delete
-        </button>
-      </div>
-      {<img src={`${data["author"]["avatar"]}`} width={200} />}
+    <div className="flex justify-center w-screen">
+      <div>
+        <div className="h-2/6 w-full bg-blue-500 ">
+          <div className="flex justify-between">
+            <h1>Complex App</h1>
+            <div>Helloo</div>
+          </div>
+        </div>
+        <h2 className="text-[20px] font-bold ">{data["title"]}</h2>
+        <div className="flex mt-2 items-center">
+          <Avatar
+            src={<img src={`${data["author"]["avatar"]}`} sizes={40} />}
+          />
+          <p className="ml-1">Created by {data["author"]["username"]}</p>
+        </div>
 
-      <p>{data["title"]}</p>
-      <p>{data["body"]}</p>
+        <p>{data["body"]}</p>
+      </div>
     </div>
   );
 }
