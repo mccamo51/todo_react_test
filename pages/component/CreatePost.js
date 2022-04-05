@@ -17,7 +17,7 @@ export default function CreatePost() {
         body,
         token: localStorage.getItem("token"),
       });
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
         console.log("faled")
     }

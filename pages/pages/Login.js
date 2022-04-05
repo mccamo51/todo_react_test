@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Image from "next/image";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Input, Space } from "antd";
+import { Input, Space, message } from "antd";
 import { useState } from "react";
 import axios from "axios";
 import DispatchContext from "../../store/DispatchContext";
@@ -22,13 +22,14 @@ function Login() {
         password,
       });
       if (response.data.token !== undefined) {
-        console.log("wertyui", response.data.token);
+        message.success("This is a success message");
+
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.username);
         localStorage.setItem("avatar", response.data.avatar);
         dispatch({ type: actions.login });
       } else {
-        alert("Cannot be empty");
+        message.error("This is an error message");
       }
     } catch (e) {
       // console.log("cccccc", e);

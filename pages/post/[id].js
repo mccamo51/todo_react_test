@@ -12,10 +12,13 @@ function postDetails({ data }) {
   async function deleteSinglePost(id) {
     try {
       const response = await axios.delete(BASEURL + "/post/" + id, {
-        token: localStorage.getItem(TokenString),
+        data: {
+          token: localStorage.getItem(TokenString),
+        },
       });
       console.log(response.data);
       console.log(localStorage.getItem(TokenString));
+      window.history.back()
     } catch (error) {
       // console.log(localStorage.getItem(TokenString));
       console.log(error);
@@ -36,11 +39,11 @@ function postDetails({ data }) {
   }
 
   return (
-    <div className="flex justify-center w-screen">
+    <div className="flex justify-center w-[60%] items-center">
       <div>
         <div className="h-2/6 w-full bg-blue-500 ">
           <div className="flex justify-between">
-            <h1>Complex App</h1>
+            <button onClick={()=>deleteSinglePost(data["_id"])}>Complex App</button>
             <div>Helloo</div>
           </div>
         </div>
